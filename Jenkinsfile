@@ -50,7 +50,7 @@ pipeline{
             post{
                 success{
                     //archiveArtifacts artifacts: '**/target/*.war' 
-                    def('webapp/target')
+                    def('webapp/target/')
                     {
                         stash name: "maven-build", includes: "*.war"
                     }
@@ -61,12 +61,11 @@ pipeline{
 
         stage('Deploy to Dev')
         {
-            when{ expression { params.env == 'Dev' }
-            beforeAgent true }
+            when{ expression { params.env == 'Dev' } beforeAgent true }
             agent {label "DevServer"}
             steps
             {
-                def('webapp/target')
+                def('/var/www/html/')
                 {
                     unstash "maven-build"
                 }
@@ -76,6 +75,27 @@ pipeline{
                 java -xvf webapp.war
                 """
             }
+        }
+
+        satge('Deploy to Prod')
+        {
+            when {expression {params.env =='Prod'} beforeAgent true}
+            agent {label "ProdServer"}
+            steps
+            {
+                timeout(time:5, unit:'Days'){
+                    input message: 'Deployment Approved?'
+                }
+                
+                def('/var/www/html/'){
+                    unstach "maven-build"
+                }
+                sh """
+                cd /var/www/html
+                java -xvf webapp.war
+                """
+            }
+
         }
     }
 }
