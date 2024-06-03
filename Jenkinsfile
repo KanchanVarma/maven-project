@@ -80,7 +80,7 @@ pipeline{
 
         stage('Deploy to Prod')
         {
-            when {expression {params.env =='Prod'} beforeAgent true}
+            when {expression {params.env =='Prod'}}
             agent {label "ProdServer"}
             steps
             {
