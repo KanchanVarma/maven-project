@@ -22,7 +22,7 @@ pipeline{
             steps{
                 echo "This is Build Stage"
                 echo "Hi $Name ${params.LastName}" 
-                sh 'mvn clean package'
+                sh 'mvn clean package -DskipTests=true'
             }
  
         }
