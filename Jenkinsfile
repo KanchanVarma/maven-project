@@ -1,6 +1,8 @@
 pipeline{
-    agent any
-    stages{
+    agent {
+        lable "DevServer"
+    }
+    stages
         stage('Build')
         {
             step{
