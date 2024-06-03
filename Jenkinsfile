@@ -12,7 +12,7 @@ pipeline{
         {
             steps{
                 echo "This is Build Stage"
-                echo "Hi + $Kanchan"
+                echo "Hi +" $Kanchan
             }
         }
 
