@@ -4,7 +4,7 @@ pipeline{
     }
 
     environment {
-        Name: "Kanchan"
+        Name = "Kanchan"
     }
     stages
     {
