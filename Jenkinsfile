@@ -49,10 +49,33 @@ pipeline{
             }
             post{
                 success{
-                    archiveArtifacts artifacts: '**/target/*.war' 
+                    //archiveArtifacts artifacts: '**/target/*.war' 
+                    def('webapp/target')
+                    {
+                        stash name: "maven-build", includes: "*.war"
+                    }
                 }
             }
             
+        }
+
+        stage('Deploy to Dev')
+        {
+            when{ expression { params.env == 'Dev' }
+            beforeAgent true }
+            agent {label "DevServer"}
+            steps
+            {
+                def('webapp/target')
+                {
+                    unstash "maven-build"
+                }
+
+                sh """
+                cd /var/www/html/
+                java -xvf webapp.war
+                """
+            }
         }
     }
 }
