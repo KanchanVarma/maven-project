@@ -84,7 +84,7 @@ pipeline{
             agent {label "ProdServer"}
             steps
             {
-                timeout(time:5, unit:'Days'){
+                timeout(time:5, unit:'DAYS'){
                     input message: 'Deployment Approved?'
                 }
                 
