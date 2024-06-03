@@ -24,18 +24,35 @@ pipeline{
                 echo "Hi $Name ${params.LastName}" 
                 sh 'mvn clean package'
             }
+ 
+        }
+
+        stage('test')
+        {
+            parallel {
+                stage('Unit Test'){
+                    agent {
+                            label 'DevServer'
+                    }
+                    steps{
+                        echo "This is Unit Test"
+                        sh 'mvn test'
+                    }
+                }
+                stage('Intergration Test'){
+                    agent {label 'DevServer'}
+                    steps{
+                        echo "This is Integration Test"
+                        sh "mvn test"
+                    }
+                }
+            }
             post{
                 success{
                     archiveArtifacts artifacts: '**/target/*.war' 
                 }
             }
-        }
-
-        stage('test')
-        {
-            steps{
-                echo "This is Test Stage"
-            }
+            
         }
     }
 }
