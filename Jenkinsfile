@@ -61,7 +61,7 @@ pipeline{
 
         stage('Deploy to Dev')
         {
-            when{ expression { params.env == 'Dev' } beforeAgent true }
+           when {expression {params.env =='Dev'} beforeAgent true}
             agent {label "DevServer"}
             steps
             {
