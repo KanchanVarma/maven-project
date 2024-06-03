@@ -2,6 +2,10 @@ pipeline{
     agent {
         label "DevServer"
     }
+    
+    tools {
+        maven 'MyMaven'
+    }
 
     environment {
         Name = "Kanchan"
