@@ -50,7 +50,7 @@ pipeline{
             post{
                 success{
                     //archiveArtifacts artifacts: '**/target/*.war' 
-                    def('webapp/target/')
+                    dir('webapp/target/')
                     {
                         stash name: "maven-build", includes: "*.war"
                     }
@@ -65,7 +65,7 @@ pipeline{
             agent {label "DevServer"}
             steps
             {
-                def('/var/www/html/')
+                dir('/var/www/html/')
                 {
                     unstash "maven-build"
                 }
@@ -87,7 +87,7 @@ pipeline{
                     input message: 'Deployment Approved?'
                 }
                 
-                def('/var/www/html/'){
+                dir('/var/www/html/'){
                     unstach "maven-build"
                 }
                 sh """
