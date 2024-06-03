@@ -18,6 +18,12 @@ pipeline{
             steps{
                 echo "This is Build Stage"
                 echo "Hi $Name ${params.LastName}" 
+                sh 'mvn clean package'
+            }
+            post{
+                success{
+                    archiveArtifacts artifacts: '**/target/*.war' 
+                }
             }
         }
 
