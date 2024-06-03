@@ -1,18 +1,17 @@
 pipeline{
-    agent {
-        lable "DevServer"
-    }
+    agent any
     stages
+    {
         stage('Build')
         {
-            step{
+            steps{
                 echo "This is Build Stage"
             }
         }
 
         stage('test')
         {
-            step{
+            steps{
                 echo "This is Test Stage"
             }
         }
