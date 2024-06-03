@@ -78,7 +78,7 @@ pipeline{
             }
         }
 
-        satge('Deploy to Prod')
+        stage('Deploy to Prod')
         {
             when {expression {params.env =='Prod'} beforeAgent true}
             agent {label "ProdServer"}
